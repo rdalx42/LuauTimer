@@ -33,7 +33,6 @@ function timer.new(timer_start_value: number?, sync_data: string?, plr: Player?,
 		self.sync_data_value = ref.Value
 	end
 
-	-- Register timer
 	timer.instances[self.name] = self
 	table.insert(timer.timer_arr, self.name)
 
@@ -41,7 +40,7 @@ function timer.new(timer_start_value: number?, sync_data: string?, plr: Player?,
 end
 
 function timer:sync_all()
-	for _, timer_name in ipairs(timer.timer_arr) do
+	for i, timer_name in ipairs(timer.timer_arr) do
 		local timer_obj = timer.instances[timer_name]
 		if timer_obj and timer_obj.sync_ref then
 			local ok, value = pcall(function()
