@@ -7,6 +7,9 @@ local timer = {
 timer.__index = timer
 
 function timer.new(timer_start_value: number?, sync_data: string?, plr: Player?, name: string?)
+	
+	if timer.timer_arr[name] then return end 
+	
 	local self = setmetatable({}, timer)
 
 	self.time_val = timer_start_value or 0
@@ -16,10 +19,6 @@ function timer.new(timer_start_value: number?, sync_data: string?, plr: Player?,
 	self.sync_data_value = 0
 	self.plr = plr
 	self.name = name or "unnamed_" .. #timer.timer_arr
-
-	if timer.instances[self.name] then
-		return
-	end
 
 	local success, ref
 	repeat
@@ -72,6 +71,7 @@ function timer:get_normalized()
 end
 
 function timer:start(label)
+	
 	if self.on then return end
 	if not label or typeof(label) ~= "Instance" or not label:IsA("TextLabel") then
 		warn("Invalid label passed to timer:start()")
